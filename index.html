@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b1020">
+<title>Las Tablas de María</title>
+<link rel="icon" href="assets/img/icon.png">
+<link rel="apple-touch-icon" href="assets/img/icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-world="home">
+
+<!-- ===== INICIO ===== -->
+<section class="screen active" id="s-start">
+  <div class="bg" style="background-image:url(assets/img/bg_home.webp)"></div>
+  <div class="start-wrap">
+    <div class="start-title">
+      <span class="kicker">LA AVENTURA DE</span>
+      <h1>Las Tablas<br>de María</h1>
+      <p class="sub">Piratas, cazadores de demonios y cuervos de Karasuno te esperan.</p>
+    </div>
+    <div class="start-heroes">
+      <img src="assets/img/ch_luffy.webp" alt="Luffy" class="hero h1">
+      <img src="assets/img/ch_nezuko.webp" alt="Nezuko" class="hero h2">
+      <img src="assets/img/ch_hinata.webp" alt="Hinata" class="hero h3">
+    </div>
+    <button class="btn btn-xl btn-start" id="btn-start">¡EMPEZAR!</button>
+    <p class="tiny">Toca para activar la música y la voz</p>
+  </div>
+</section>
+
+<!-- ===== MAPA / HOME ===== -->
+<section class="screen" id="s-home">
+  <div class="bg" style="background-image:url(assets/img/bg_home.webp)"></div>
+  <header class="topbar">
+    <div class="pill coins" id="coins-pill"><svg class="ico"><use href="#i-coin"/></svg><b id="coins">0</b></div>
+    <div class="pill tickets" id="tickets-pill" title="Entradas gratis a minijuegos"><svg class="ico"><use href="#i-ticket"/></svg><b id="tickets">0</b></div>
+    <button class="iconbtn" id="btn-sound" aria-label="Sonido"><svg class="ico"><use href="#i-sound"/></svg></button>
+  </header>
+  <div class="scroll">
+    <div class="hello">
+      <div class="ring" id="goal-ring" style="--p:0"><span id="goal-txt">0</span></div>
+      <div>
+        <h2 id="hello-title">¡Hola, María!</h2>
+        <p class="muted" id="hello-sub">Objetivo de hoy: 60 aciertos</p>
+      </div>
+    </div>
+
+    <div class="tables-map" id="tables-map"></div>
+
+    <div class="tiles">
+      <button class="tile t-train" data-go="pick"><img class="t-img" src="assets/img/ch_luffy.webp" alt=""><b>Entrenar</b><small>Tabla por tabla</small></button>
+      <button class="tile t-battle" data-go="worlds"><img class="t-img" src="assets/img/boss_demon.webp" alt=""><b>Batalla</b><small>Derrota a los jefes</small></button>
+      <button class="tile t-exam" data-go="exam"><img class="t-img" src="assets/img/ch_hinata.webp" alt=""><b>Examen</b><small>Como el de mañana</small></button>
+      <button class="tile t-games" data-go="games"><img class="t-img" src="assets/img/ch_nezuko.webp" alt=""><b>Minijuegos</b><small id="games-sub">Cuestan 100 monedas</small></button>
+    </div>
+    <button class="btn btn-ghost" data-go="gallery">Mis trofeos</button>
+  </div>
+</section>
+
+<!-- ===== ELEGIR TABLA ===== -->
+<section class="screen" id="s-pick">
+  <div class="bg" style="background-image:url(assets/img/bg_home.webp)"></div>
+  <header class="topbar"><button class="iconbtn" data-go="home"><svg class="ico"><use href="#i-back"/></svg></button><h3>¿Qué tabla entrenamos?</h3><span></span></header>
+  <div class="scroll">
+    <div class="pick-grid" id="pick-grid"></div>
+    <div class="pick-extra">
+      <button class="btn btn-accent" id="btn-worst">Las que más fallo</button>
+      <button class="btn btn-ghost" id="btn-mixed">Mezcla del 1 al 7</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VER LA TABLA ===== -->
+<section class="screen" id="s-table">
+  <div class="bg" id="table-bg"></div>
+  <header class="topbar"><button class="iconbtn" data-go="pick"><svg class="ico"><use href="#i-back"/></svg></button><h3 id="table-title">Tabla del 7</h3><span></span></header>
+  <div class="scroll">
+    <p class="muted center">Toca una línea para oírla</p>
+    <div class="table-list" id="table-list"></div>
+    <button class="btn btn-accent btn-xl" id="btn-table-train">¡A entrenar esta tabla!</button>
+  </div>
+</section>
+
+<!-- ===== MUNDOS (batalla) ===== -->
+<section class="screen" id="s-worlds">
+  <div class="bg" style="background-image:url(assets/img/bg_home.webp)"></div>
+  <header class="topbar"><button class="iconbtn" data-go="home"><svg class="ico"><use href="#i-back"/></svg></button><h3>Elige tu mundo</h3><span></span></header>
+  <div class="scroll" id="worlds-list"></div>
+</section>
+
+<!-- ===== QUIZ (entrenar / examen) ===== -->
+<section class="screen" id="s-quiz">
+  <div class="bg" id="quiz-bg"></div>
+  <header class="topbar">
+    <button class="iconbtn" id="quiz-back"><svg class="ico"><use href="#i-back"/></svg></button>
+    <div class="progress" id="quiz-progress"></div>
+    <div class="pill streak" id="streak-pill"><svg class="ico"><use href="#i-flame"/></svg><b id="streak">0</b></div>
+  </header>
+  <div class="quiz-body">
+    <div class="mascot" id="mascot">
+      <div class="bubble" id="bubble">¡Tú puedes!</div>
+      <img id="mascot-img" src="" alt="">
+      <span class="mascot-name" id="mascot-name"></span>
+    </div>
+    <div class="qcard" id="qcard">
+      <div class="qtext"><span id="q-a">7</span><span class="x">×</span><span id="q-b">8</span></div>
+      <div class="answer" id="answer"><span id="ans-txt"></span><span class="caret"></span></div>
+      <div class="fix" id="fix"></div>
+    </div>
+    <div class="keypad" id="keypad">
+      <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+      <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+      <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+      <button data-k="del" class="k-del">⌫</button><button data-k="0">0</button><button data-k="ok" class="k-ok">✓</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BATALLA ===== -->
+<section class="screen" id="s-battle">
+  <div class="bg" id="battle-bg"></div>
+  <header class="topbar">
+    <button class="iconbtn" id="battle-back"><svg class="ico"><use href="#i-back"/></svg></button>
+    <h3 id="battle-title">Jefe</h3>
+    <div class="hearts" id="hearts"></div>
+  </header>
+  <div class="battle-body">
+    <div class="boss" id="boss">
+      <div class="hpbar"><div class="hp" id="boss-hp"></div></div>
+      <img id="boss-img" src="" alt="">
+      <span class="boss-name" id="boss-name"></span>
+      <div class="slashfx" id="slashfx"></div>
+      <div class="fighter"><img id="fighter-img" src="" alt=""><span>María</span></div>
+    </div>
+    <div class="timerbar"><div id="timer-fill"></div></div>
+    <div class="qcard small" id="bcard">
+      <div class="qtext"><span id="b-a">7</span><span class="x">×</span><span id="b-b">8</span></div>
+    </div>
+    <div class="choices" id="choices"></div>
+  </div>
+</section>
+
+<!-- ===== RESULTADO ===== -->
+<section class="screen" id="s-result">
+  <div class="bg" id="result-bg"></div>
+  <div class="result-wrap">
+    <div class="result-card" id="result-card">
+      <img id="result-img" src="" alt="" class="result-img">
+      <h2 id="result-title">¡Ronda superada!</h2>
+      <div class="stars" id="result-stars"></div>
+      <p id="result-sub" class="muted"></p>
+      <div class="result-coins" id="result-coins"></div>
+      <div class="result-list" id="result-list"></div>
+      <div class="result-btns">
+        <button class="btn btn-accent btn-xl" id="result-again">Otra vez</button>
+        <button class="btn btn-game" id="result-game">Jugar minijuego</button>
+        <button class="btn btn-ghost" data-go="home">Volver al mapa</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MINIJUEGOS ===== -->
+<section class="screen" id="s-games">
+  <div class="bg" style="background-image:url(assets/img/bg_home.webp)"></div>
+  <header class="topbar"><button class="iconbtn" data-go="home"><svg class="ico"><use href="#i-back"/></svg></button><h3>Minijuegos</h3><div class="pill coins"><svg class="ico"><use href="#i-coin"/></svg><b class="coins-mirror">0</b></div></header>
+  <div class="scroll" id="games-list"></div>
+</section>
+
+<section class="screen" id="s-play">
+  <header class="topbar">
+    <button class="iconbtn" id="play-back"><svg class="ico"><use href="#i-back"/></svg></button>
+    <h3 id="play-title">Juego</h3>
+    <span></span>
+  </header>
+  <div class="play-area" id="play-area"></div>
+</section>
+
+<!-- ===== GALERÍA ===== -->
+<section class="screen" id="s-gallery">
+  <div class="bg" style="background-image:url(assets/img/bg_home.webp)"></div>
+  <header class="topbar"><button class="iconbtn" data-go="home"><svg class="ico"><use href="#i-back"/></svg></button><h3>Mis trofeos</h3><span></span></header>
+  <div class="scroll" id="gallery-list"></div>
+</section>
+
+<!-- ===== CAPAS ===== -->
+<div class="toast" id="toast"></div>
+<div class="moment" id="moment"><img id="moment-img" src="" alt=""><div class="moment-txt" id="moment-txt"></div></div>
+<div class="lightbox" id="lightbox"><img id="lightbox-img" src="" alt=""><button class="btn btn-ghost" id="lightbox-close">Cerrar</button></div>
+<canvas id="confetti"></canvas>
+<div class="flyer" id="flyer"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#FFC72C"/><circle cx="12" cy="12" r="7" fill="none" stroke="#B8860B" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="800" fill="#8a5a00">฿</text></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z" fill="#F52C98"/><path d="M9 7v10" stroke="#fff" stroke-width="1.5" stroke-dasharray="2 2"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-10z" fill="#FF6B00"/><path d="M12 22a3 3 0 0 1-3-3c0-1.5 1-2.5 1.5-3.5.5 1.5 1.5 2 1.5 2 .5-1 .5-2.5 1-3.5 1 1.5 2 2.5 2 5a3 3 0 0 1-3 3z" fill="#FFD166"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-4 5 5 0 0 1 9 4c-2 4.5-9 9-9 9z" fill="currentColor"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.5 5.7 21l1.5-7L2 9.3l7-.8z" fill="currentColor"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="3" fill="currentColor"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.5"/></symbol>
+</svg>
+
+<script src="config.js"></script>
+<script src="games/pacman.js"></script>
+<script src="games/tetris.js"></script>
+<script src="games/volley.js"></script>
+<script src="games/slash.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
